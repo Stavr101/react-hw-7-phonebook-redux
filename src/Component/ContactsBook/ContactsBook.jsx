@@ -1,92 +1,86 @@
-import { Component } from "react";
-import { nanoid } from "nanoid";
+// import { useState } from "react";
 import "../../App.css";
-
-import { ContactList } from "./ContactList/ContactList";
+import { useDispatch, useSelector } from "react-redux";
+import { ContactsList } from "./ContactList/ContactList";
 import { FindContact } from "./FindContact/FindContact";
 import { ContactForm } from "./ContactForm/ContactForm";
+import {
+  addContact,
+  deleteContacts,
+  setFilter,
+} from "../../redux/contactsSlice";
 
-export class ContactsBook extends Component {
-  state = {
-    contacts: [
-      { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-      { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-      { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-      { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-    ],
-    name: "",
-    number: "",
-    filter: "",
+export const ContactsBook = () => {
+  const dispatch = useDispatch();
+  const { contacts, filter } = useSelector((state) => state.contacts);
+  const getFormData = (form) => {
+    const { name, number } = form.elements;
+    return {
+      name: name.value.trim(),
+      number: number.value.trim(),
+    };
+  };
+  const handleFilterChange = (event) => {
+    dispatch(setFilter(event.target.value));
   };
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-  };
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
-    const { name, number } = this.state;
+    const form = event.currentTarget;
+
+    const { name, number } = getFormData(form);
+    console.log("🚀 ~ handleSubmit ~ name:", name);
+    console.log("🚀 ~ handleSubmit ~ number:", number);
+    // const name = form.name.value;
+    // const number = form.number.value;
 
     if (!name.trim() || !number.trim()) {
       alert(`${name} is already in contacts.`);
       return;
     }
-    this.setState((prevState) => ({
-      contacts: [
-        ...prevState.contacts,
-        { name: prevState.name, number: prevState.number, id: nanoid() },
-      ],
-      name: "",
-      number: "",
-    }));
 
-    event.currentTarget.reset();
-  };
-
-  deleteContact = (id) => {
-    this.setState((prevState) => ({
-      contacts: prevState.contacts.filter((contact) => contact.id !== id),
-    }));
-  };
-
-  render() {
-    const { contacts, filter } = this.state;
-
-    const filterContacts = contacts.filter(
-      (contact) =>
-        contact.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
-        contact.number.includes(filter)
+    const isDublicate = contacts.some(
+      (contact) => contact.name.toLowerCase() === name.toLowerCase()
     );
+    if (isDublicate) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
 
-    return (
-      <div className="card">
-        <h1>Phonebook</h1>
-        <div
-          style={{
-            margin: 8,
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <ContactForm
-            onSubmit={this.handleSubmit}
-            onChange={this.handleChange}
-          />
+    dispatch(addContact(name, number));
+  };
 
-          <h2>Contacts</h2>
-          <p>Find contacts by name</p>
-          <FindContact onChange={this.handleChange} />
+  const deleteContact = (id) => {
+    dispatch(deleteContacts(id));
+  };
 
-          <ContactList
-            contacts={filterContacts}
-            deleteContact={this.deleteContact}
-          />
-        </div>
+  const filterContacts = contacts.filter(
+    (contact) =>
+      contact.name.toLowerCase().includes(filter.toLowerCase()) ||
+      contact.number.includes(filter)
+  );
+
+  return (
+    <div className="card">
+      <h1>Phonebook</h1>
+      <div
+        style={{
+          margin: 8,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <ContactForm onSubmit={handleSubmit} />
+
+        <h2>Contacts</h2>
+        <p>Find contacts by name</p>
+        <FindContact onChange={handleFilterChange} />
+
+        <ContactsList contacts={filterContacts} deleteContact={deleteContact} />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default ContactsBook;

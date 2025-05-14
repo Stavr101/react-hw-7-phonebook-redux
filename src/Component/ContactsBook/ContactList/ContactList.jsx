@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 
 export const ContactsList = ({ contacts, deleteContact }) => {
+  // console.log("🚀 ~ ContactsList ~ contacts:", contacts);
+
   return (
     <ul>
       {contacts.map((contact) => (
@@ -20,7 +22,7 @@ ContactsList.propTypes = {
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      number: PropTypes.number.isRequired,
+      number: PropTypes.string.isRequired,
       id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     })
   ),

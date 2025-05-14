@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
-const InputContact = ({ onChange }) => {
+const InputContact = () => {
   return (
     <div>
       <input
-        onChange={onChange}
+        // onChange={onChange}
         type="text"
         name="name"
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -16,6 +16,6 @@ const InputContact = ({ onChange }) => {
 };
 export default InputContact;
 
-InputContact.propTypes = {
-  onChange: PropTypes.func.isRequired,
-};
+// InputContact.propTypes = {
+//   onChange: PropTypes.func.isRequired,
+// };

@@ -2,17 +2,17 @@ import PropTypes from "prop-types";
 import InputContact from "../InputContact/InputContact";
 import { InputNumber } from "../InputNumber/InputNumber";
 
-export const ContactForm = ({ onSubmit, onChange }) => {
+export const ContactForm = ({ onSubmit }) => {
   return (
     <>
       <form onSubmit={onSubmit}>
         <label htmlFor="name">
           Name
-          <InputContact onChange={onChange} />
+          <InputContact />
         </label>
         <label htmlFor="number">
           Number
-          <InputNumber onChange={onChange} />
+          <InputNumber />
         </label>
 
         <button type="submit" style={{ margin: 30 }}>
@@ -25,5 +25,5 @@ export const ContactForm = ({ onSubmit, onChange }) => {
 
 ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
+  // onChange: PropTypes.func.isRequired,
 };

@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
-export const InputNumber = ({ onChange }) => {
+export const InputNumber = () => {
   return (
     <div>
       <input
-        onChange={onChange}
+        // onChange={onChange}
         type="tel"
         name="number"
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -15,6 +15,6 @@ export const InputNumber = ({ onChange }) => {
   );
 };
 
-InputNumber.propTypes = {
-  onChange: PropTypes.func.isRequired,
-};
+// InputNumber.propTypes = {
+//   onChange: PropTypes.func.isRequired,
+// };
