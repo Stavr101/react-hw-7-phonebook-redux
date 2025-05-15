@@ -1,9 +1,14 @@
-import PropTypes from "prop-types";
-export const FindContact = ({ onChange }) => {
+import { useDispatch } from "react-redux";
+import { setStatusFilter } from "../../../redux/filterSlice";
+export const FindContact = () => {
+  const dispatch = useDispatch();
+  const handleFilterChange = (event) => {
+    dispatch(setStatusFilter(event.target.value));
+  };
   return (
     <div>
       <input
-        onChange={onChange}
+        onChange={handleFilterChange}
         type="text"
         name="filter"
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -12,8 +17,4 @@ export const FindContact = ({ onChange }) => {
       />
     </div>
   );
-};
-
-FindContact.propTypes = {
-  onChange: PropTypes.func.isRequired,
 };
