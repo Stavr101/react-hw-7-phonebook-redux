@@ -1,23 +1,25 @@
 import "../../App.css";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { ContactsList } from "./ContactList/ContactList";
 import { FindContact } from "./FindContact/FindContact";
 import { ContactForm } from "./ContactForm/ContactForm";
 
-import { useEffect } from "react";
-import { fetchContacts } from "../../redux/operations";
+// import { useEffect } from "react";
+// import { fetchContacts } from "../../redux/operations";
+// import { getErrors, getIsLoading } from "../../redux";
+// import { useGetContactsQuery } from "../../redux/contactsSlice";
 
-import { getErrors, getIsLoading } from "../../redux/selectors";
+// import { getErrors, getIsLoading } from "../../redux/selectors";
 
 export const ContactsBook = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchContacts());
+  // }, [dispatch]);
 
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getErrors);
+  // const isLoading = useSelector(getIsLoading);
+  // const error = useSelector(getErrors);
 
   return (
     <div className="card">
@@ -30,7 +32,7 @@ export const ContactsBook = () => {
         }}
       >
         <ContactForm />
-        {isLoading && !error && <b>Request in progress...</b>}
+
         <h2>Contacts</h2>
         <p>Find contacts by name</p>
         <FindContact />
